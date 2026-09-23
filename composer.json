@@ -1,0 +1,7 @@
+{
+    "name": "kleeja/kj_smtp_mailer",
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
+    },
+    "license": "MIT"
+}

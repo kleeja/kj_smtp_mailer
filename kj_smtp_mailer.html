@@ -1,0 +1,141 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./">{lang.R_CPINDEX}</a></li>
+        <li class="breadcrumb-item active">{olang.R_KJ_SMTP_MAILER}</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="{kjsm_settings_url}">{olang.KJ_SMTP_MAILER_TAB_SETTINGS}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link (kjsm_is_presets?active:)" href="{kjsm_presets_url}">{olang.KJ_SMTP_MAILER_TAB_PRESETS}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link (kjsm_is_status?active:)" href="{kjsm_status_url}">{olang.KJ_SMTP_MAILER_TAB_TEST}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+
+        <IF NAME="kjsm_alert">
+            <div class="alert alert-{kjsm_alert_role}" role="alert">{kjsm_alert}</div>
+        </IF>
+
+        <IF NAME="kjsm_is_presets">
+
+            <p class="text-muted">{olang.KJ_SMTP_MAILER_PRESETS_INTRO}</p>
+
+            <div class="alert alert-warning" role="alert">
+                <i class="fa fa-exclamation-triangle"></i> {olang.KJ_SMTP_MAILER_PRESETS_WARNING}
+            </div>
+
+            <LOOP NAME="kjsm_preset_list">
+                <div class="card mb-3">
+                    <div class="card-header">{{name}}</div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="width:12rem">{olang.KJ_SMTP_MAILER_SMTP_HOST}</th>
+                                    <td>{{host}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{olang.KJ_SMTP_MAILER_SMTP_PORT}</th>
+                                    <td>{{port}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{olang.KJ_SMTP_MAILER_SMTP_ENCRYPTION}</th>
+                                    <td>{{encryption}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">{olang.KJ_SMTP_MAILER_AUTHENTICATION}</th>
+                                    <td>{{auth}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <IF LOOP="note">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> {{note}}
+                            </div>
+                        </IF>
+
+                        <form method="post" action="{kjsm_presets_url}">
+                            {kjsm_preset_form_keys}
+                            <button type="submit" class="btn btn-primary" name="kjsm_apply_preset" value="{{key}}"
+                                    onclick="javascript:return confirm_form('{kjsm_preset_confirm}');">
+                                <i class="fa fa-magic"></i> {olang.KJ_SMTP_MAILER_PRESETS_APPLY}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </LOOP>
+
+        <ELSE>
+
+            <IF NAME="kjsm_active">
+                <div class="alert alert-success" role="alert">
+                    <i class="fa fa-check"></i> {olang.KJ_SMTP_MAILER_STATUS_ACTIVE}
+                </div>
+            <ELSE>
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-exclamation-triangle"></i> {olang.KJ_SMTP_MAILER_STATUS_INACTIVE}
+                    <ul class="mb-0 mt-2">
+                        <LOOP NAME="kjsm_problems">
+                            <li>{{text}}</li>
+                        </LOOP>
+                    </ul>
+                </div>
+            </IF>
+
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <th scope="row" style="width:12rem">{olang.KJ_SMTP_MAILER_SERVER}</th>
+                        <td>{kjsm_server}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{olang.KJ_SMTP_MAILER_ENCRYPTION}</th>
+                        <td>{kjsm_encryption}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{olang.KJ_SMTP_MAILER_SENDER}</th>
+                        <td>{kjsm_sender}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{olang.KJ_SMTP_MAILER_LOGIN}</th>
+                        <td>{kjsm_login}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a class="btn btn-outline-secondary btn-sm" href="{kjsm_settings_url}">
+                <i class="fa fa-gear"></i> {olang.KJ_SMTP_MAILER_EDIT_SETTINGS}
+            </a>
+
+            <hr>
+
+            <h5>{olang.KJ_SMTP_MAILER_TEST_TITLE}</h5>
+            <p class="text-muted">{olang.KJ_SMTP_MAILER_TEST_HINT}</p>
+
+            <form method="post" action="{kjsm_status_url}">
+                {H_FORM_KEYS}
+                <div class="form-group">
+                    <label for="kjsm_test_to">{olang.KJ_SMTP_MAILER_TEST_TO}</label>
+                    <input type="email" class="form-control" id="kjsm_test_to" name="kjsm_test_to"
+                           value="{kjsm_test_to}" size="50" required>
+                </div>
+                <button type="submit" class="btn btn-primary" name="kjsm_send_test" value="1">
+                    <i class="fa fa-paper-plane"></i> {olang.KJ_SMTP_MAILER_TEST_SEND}
+                </button>
+            </form>
+
+        </IF>
+
+    </div>
+</div>
