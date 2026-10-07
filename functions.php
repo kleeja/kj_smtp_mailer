@@ -444,6 +444,7 @@ function kj_smtp_mailer_send(
     string $fromName = '',
     string $bcc = '',
     ?string &$error = null,
+    string $html_body = '',
 ): bool {
     $error = null;
     $mail  = null;
@@ -479,7 +480,20 @@ function kj_smtp_mailer_send(
         }
 
         $mail->Subject = $subject;
-        $mail->Body    = $body;
+
+        //Kleeja 4 renders its mail template and hands over the HTML with the
+        //plain text; older versions only have the text, which stays as it was
+        if ($html_body !== '')
+        {
+            $mail->isHTML(true);
+            $mail->Body    = $html_body;
+            $mail->AltBody = $body;
+        }
+        else
+        {
+            $mail->isHTML(false);
+            $mail->Body = $body;
+        }
 
         return $mail->send();
     }
