@@ -22,7 +22,7 @@ $kleeja_plugin['kj_smtp_mailer']['information'] = [
     // who wrote this plugin?
     'plugin_developer' => 'Kleeja Team',
     // this plugin version
-    'plugin_version' => '1.0',
+    'plugin_version' => '1.2',
     // explain what is this plugin, why should i use it?
     'plugin_description' => [
         'en' => 'Send mails through your own SMTP server instead of the PHP mail function',
@@ -151,5 +151,39 @@ $kleeja_plugin['kj_smtp_mailer']['functions'] = [
         $sending_mail_handled = true;
 
         return compact('sending_mail_handled', 'mail_sent');
+    },
+
+    //the guide of the plugin on kleeja's help page, its words are in language/help_{code}.php
+    'admin_help_guides' => function ($args) {
+        $help_guides = $args['help_guides'];
+        $words       = kj_smtp_mailer_help_words();
+
+        //keyed by the plugin name, so kleeja shows the plugin's icon with it, and
+        //'page' makes the help button of the SMTP Mailer page open it
+        $help_guides['kj_smtp_mailer'] = [
+            'group'    => 'plugins',
+            'title'    => $words['KJ_SMTP_MAILER_HELP_TITLE'],
+            'intro'    => $words['KJ_SMTP_MAILER_HELP_INTRO'],
+            'page'     => 'kj_smtp_mailer',
+            'link'     => './?cp=kj_smtp_mailer',
+            //tips and warnings sit beside the rest on wide screens
+            'sections' => [
+                kj_smtp_mailer_help_section($words, 'features', 'FEATURE'),
+                kj_smtp_mailer_help_section($words, 'steps', 'STEP'),
+                kj_smtp_mailer_help_section($words, 'features', 'SETTING'),
+                kj_smtp_mailer_help_section($words, 'faq', 'FAQ'),
+                kj_smtp_mailer_help_section($words, 'tips', 'TIP'),
+                kj_smtp_mailer_help_section($words, 'warnings', 'WARNING'),
+            ],
+        ];
+
+        //the settings of the plugin are a tab of kleeja's settings page, whose help
+        //button opens kleeja's own guide, so that guide points to this one
+        if (isset($help_guides['settings']))
+        {
+            $help_guides['settings']['sections'][] = ['type' => 'text', 'text' => $words['KJ_SMTP_MAILER_HELP_NOTE']];
+        }
+
+        return compact('help_guides');
     },
 ];
