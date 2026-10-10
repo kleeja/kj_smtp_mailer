@@ -22,7 +22,7 @@ $kleeja_plugin['kj_smtp_mailer']['information'] = [
     // who wrote this plugin?
     'plugin_developer' => 'Kleeja Team',
     // this plugin version
-    'plugin_version' => '1.3',
+    'plugin_version' => '1.4',
     // explain what is this plugin, why should i use it?
     'plugin_description' => [
         'en' => 'Send mails through your own SMTP server instead of the PHP mail function',
@@ -33,7 +33,7 @@ $kleeja_plugin['kj_smtp_mailer']['information'] = [
     // min version of kleeja that's required to run this plugin
     'plugin_kleeja_version_min' => '4.0.0',
     // max version of kleeja that support this plugin, use 0 for unlimited
-    'plugin_kleeja_version_max' => '3.9',
+    'plugin_kleeja_version_max' => '4.9.9',
     // should this plugin run before others?, 0 is normal, and higher number has high priority
     'plugin_priority' => 0,
     // setting page to display in plugins page
