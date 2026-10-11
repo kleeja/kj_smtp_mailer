@@ -22,7 +22,7 @@ $kleeja_plugin['kj_smtp_mailer']['information'] = [
     // who wrote this plugin?
     'plugin_developer' => 'Kleeja Team',
     // this plugin version
-    'plugin_version' => '1.4',
+    'plugin_version' => '1.5',
     // explain what is this plugin, why should i use it?
     'plugin_description' => [
         'en' => 'Send mails through your own SMTP server instead of the PHP mail function',
